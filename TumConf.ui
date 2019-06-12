@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>989</width>
-    <height>750</height>
+    <width>387</width>
+    <height>732</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -79,10 +79,10 @@
             <item>
              <layout class="QFormLayout" name="formLayout_2">
               <property name="labelAlignment">
-               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+               <set>Qt::AlignCenter</set>
               </property>
               <property name="formAlignment">
-               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+               <set>Qt::AlignHCenter|Qt::AlignTop</set>
               </property>
               <item row="0" column="0">
                <widget class="QLabel" name="label_2">
@@ -152,7 +152,7 @@
                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
               </property>
               <property name="formAlignment">
-               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+               <set>Qt::AlignHCenter|Qt::AlignTop</set>
               </property>
               <item row="0" column="0">
                <widget class="QLabel" name="label_10">
@@ -205,7 +205,7 @@
                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
               </property>
               <property name="formAlignment">
-               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+               <set>Qt::AlignHCenter|Qt::AlignTop</set>
               </property>
               <item row="0" column="0">
                <widget class="QLabel" name="label_6">
@@ -337,7 +337,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>989</width>
+     <width>387</width>
      <height>22</height>
     </rect>
    </property>
