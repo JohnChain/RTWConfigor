@@ -4,7 +4,7 @@ from PyQt5 import QtGui, QtWidgets
 import sys
 import TumConf
 
-class ExampleApp(QtWidgets.QMainWindow, TumConf.Ui_MainWindow):
+class ExampleApp(QtWidgets.QMainWindow, TumConf.Ui_TUMCONF):
     def __init__(self, parent=None):
         super(ExampleApp, self).__init__(parent)
         self.setupUi(self)
