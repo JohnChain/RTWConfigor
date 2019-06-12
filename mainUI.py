@@ -4,10 +4,21 @@ from PyQt5 import QtGui, QtWidgets
 import sys
 import TumConf
 
+def registEvent(widget):
+    
+    return
+
+
+
 class ExampleApp(QtWidgets.QMainWindow, TumConf.Ui_TUMCONF):
     def __init__(self, parent=None):
         super(ExampleApp, self).__init__(parent)
         self.setupUi(self)
+        registEvent(self)
+        self.btnCheckDevice.clicked.connect(self.checkDevice)
+
+    def checkDevice(self):
+        print ("hello will checkDevice")
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
