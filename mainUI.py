@@ -51,9 +51,55 @@ class ExampleApp(QtWidgets.QMainWindow, TumConf.Ui_TUMCONF):
             self.netConf.fileName = fileName
         else:
             self.printLog("未指定配置文件路径")
+        self.restoreConf()
+
+    def restoreConf(self):
+        fullJson = loadJsonFile(self.netConf.fileName)
+        subNetDir = fullJson["network"]
+        if subNetDir["type"] == "wired":
+            self.tabNetConf.setCurrentIndex(0)
+            if subNetDir["access"] == "dynamic":
+                self.rbtnIsWiredDHCP.setChecked(True)
+                self.switchEditable("wired", False)
+            else:
+                self.rbtnIsWiredDHCP.setChecked(False)
+                self.switchEditable("wired", True)
+                self.txtWiredIP.setText(subNetDir["static"]["inet"])
+                self.txtWiredMask.setText(subNetDir["static"]["netmask"])
+                self.txtWiredGateway.setText(subNetDir["static"]["gateway"])
+                self.txtWiredDNS.setText(subNetDir["static"]["dns"])
+        elif subNetDir["type"] == "wifi":
+            self.tabNetConf.setCurrentIndex(1)
+            self.txtWifiSSID.setText(subNetDir["wifi"]["ssid"])
+            self.txtWifiPassword.setText(subNetDir["wifi"]["password"])
+            if subNetDir["access"] == "dynamic":
+                self.rbtnIsWifiDHCP.setChecked(True)
+                self.switchEditable("wifi", False)
+            else:
+                self.rbtnIsWifiDHCP.setChecked(False)
+                self.switchEditable("wifi", True)
+                self.txtWifiIP.setText(subNetDir["static"]["inet"])
+                self.txtWifiMask.setText(subNetDir["static"]["netmask"])
+                self.txtWifiGateway.setText(subNetDir["static"]["gateway"])
+                self.txtWifiDNS.setText(subNetDir["static"]["dns"])
+        else:
+            self.tabNetConf.setCurrentIndex(2)
+            if subNetDir["mobile"] == dirMobileType["unicom"]:
+                self.rbtnCMNET.setChecked(False)
+                self.rbtnCMCC.setChecked(False)
+                self.rbtnUNICOM.setChecked(True)
+            elif subNetDir["mobile"] == dirMobileType["mobile"]:
+                self.rbtnCMNET.setChecked(False)
+                self.rbtnCMCC.setChecked(True)
+                self.rbtnUNICOM.setChecked(False)
+            else:
+                self.rbtnCMNET.setChecked(True)
+                self.rbtnCMCC.setChecked(False)
+                self.rbtnUNICOM.setChecked(False)
     def rebootDevice(self):
         cmdStr = "adb reboot"
         _ = processCMD(cmdStr)
+        self.printLog("====== reboot device =======")
 
     def netDownloadConf(self):
         if self.netConf.netType == "wired":
