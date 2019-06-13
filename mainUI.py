@@ -3,19 +3,137 @@
 from PyQt5 import QtGui, QtWidgets
 import sys
 import TumConf
+from networkConf import *
 
 class ExampleApp(QtWidgets.QMainWindow, TumConf.Ui_TUMCONF):
     def __init__(self, parent=None):
         super(ExampleApp, self).__init__(parent)
         self.setupUi(self)
         self.registEvent()
+        self.initStates()
+        self.netConf = NetworkConf()
+
+    def initStates(self):
+        self.switchEditable("wired", False)
+        self.switchEditable("wifi", False)
+        self.switchConfButtons(False)
 
     def registEvent(self):
         self.btnCheckDevice.clicked.connect(self.checkDevice)
-        #TODO: regist all other hot events
+        self.btnNetDownloadConf.clicked.connect(self.netDownloadConf)
+        self.btnNetLoadConf.clicked.connect(self.netLoadConf)
+        self.btnReboot.clicked.connect(self.rebootDevice)
+        self.rbtnIsWiredDHCP.toggled.connect(self.switchWiredDHCP)
+        self.rbtnIsWifiDHCP.clicked.connect(self.switchWifiDHCP)
+        self.rbtnCMCC.clicked.connect(self.switchMobileType)
+        self.rbtnCMNET.clicked.connect(self.switchMobileType)
+        self.rbtnUNICOM.clicked.connect(self.switchMobileType)
+        self.tabNetConf.currentChanged.connect(self.tabIndexChanged)
+
+    def tabIndexChanged(self):
+        index = self.tabNetConf.currentIndex()
+        self.netConf.netType = dirNetType[index]
+
+    def printLog(self, msg):
+        timeStr = time.strftime("[%Y-%m-%d %H:%M:%S] ", time.localtime())
+        self.txtLog.appendPlainText(timeStr + msg)
+
+    def netLoadConf(self):
+        filePath = self.txtConfPath.text()
+        if filePath != "":
+            cmdStr = "adb pull " + filePath
+            cmdOut = processCMD(cmdStr)
+            for line in cmdOut:
+                self.printLog(line.decode("utf-8"))
+            
+            #TODO: check pull ok or not
+            fileName = filePath.split("/")[-1]
+            self.netConf.fileName = fileName
+        else:
+            self.printLog("未指定配置文件路径")
+    def rebootDevice(self):
+        cmdStr = "adb reboot"
+        _ = processCMD(cmdStr)
+
+    def netDownloadConf(self):
+        if self.netConf.netType == "wired":
+            if not self.netConf.isDHCP:
+                self.netConf.mask = self.txtWiredMask.text()
+                self.netConf.ipAddress = self.txtWiredIP.text()
+                self.netConf.gateway = self.txtWiredGateway.text()
+                self.netConf.dns = self.txtWiredDNS.text()
+        elif self.netConf.netType == "wifi":
+            self.netConf.wifiSSID = self.txtWifiSSID.text()
+            self.netConf.wifiPasswd = self.txtWifiPassword.text()
+            if not self.netConf.isDHCP:
+                self.netConf.mask = self.txtWifiMask.text()
+                self.netConf.ipAddress = self.txtWifiIP.text()
+                self.netConf.gateway = self.txtWifiGateway.text()
+                self.netConf.dns = self.txtWifiDNS.text()
+        else:
+            self.switchMobileType()
+        self.netConf.downloadNetConf()
+        cmdStr = "adb push " + self.netConf.fileName + " " + self.txtConfPath.text()
+        cmdOut = processCMD(cmdStr)
+        for line in cmdOut:
+            self.printLog(line.decode("utf-8"))
+
+    def switchEditable(self, netType, TF):
+        if netType == "wired":
+            self.txtWiredMask.setEnabled(TF)
+            self.txtWiredIP.setEnabled(TF)
+            self.txtWiredGateway.setEnabled(TF)
+            self.txtWiredDNS.setEnabled(TF)
+        else :
+            self.txtWifiMask.setEnabled(TF)
+            self.txtWifiIP.setEnabled(TF)
+            self.txtWifiGateway.setEnabled(TF)
+            self.txtWifiDNS.setEnabled(TF)
+    def switchConfButtons(self, TF):
+        self.btnNetDownloadConf.setEnabled(TF)
+        self.btnNetLoadConf.setEnabled(TF)
+        self.btnReboot.setEnabled(TF)
+
+        if TF:
+            self.btnCheckDevice.setStyleSheet("background-color: green")
+        else:
+            self.btnCheckDevice.setStyleSheet("background-color: red")
+    
+    def switchWiredDHCP(self):
+        self.netConf.isDHCP = self.rbtnIsWiredDHCP.isChecked()
+        self.switchEditable("wired", not self.netConf.isDHCP)
+
+    def switchWifiDHCP(self):
+        self.netConf.isDHCP = self.rbtnIsWifiDHCP.isChecked()
+        self.switchEditable("wifi", not self.netConf.isDHCP)
+
+    def switchMobileType(self):
+        if self.rbtnCMNET.isChecked():
+            self.netConf.mobileType = dirMobileType["telecom"]
+        elif self.rbtnCMCC.isChecked():
+            self.netConf.mobileType = dirMobileType["mobile"]
+        else:
+            self.netConf.mobileType = dirMobileType["unicom"]
 
     def checkDevice(self):
-        print ("hello will checkDevice")
+        cmdOut = processCMD("adb devices")
+        if len(cmdOut) > 0:
+            deviceStrings = cmdOut[1:] #TODO: check zero len if cmd fail
+            firstDevice = deviceStrings[0].decode("utf-8")
+            deviceSN = firstDevice.split("device")[0]
+            if len(deviceSN) > 1:
+                self.lblDeviceID.setText(deviceSN)
+                self.switchConfButtons(True)
+            else:
+                self.lblDeviceID.setText("None")
+                self.switchConfButtons(False)
+            print(deviceSN)
+        else:
+            self.lblDeviceID.setText("UNKNOW")
+            self.switchConfButtons(False)
+
+        for line in cmdOut:
+            self.printLog(line.decode("utf-8"))
 
 def main():
     app = QtWidgets.QApplication(sys.argv)

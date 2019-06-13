@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>387</width>
-    <height>732</height>
+    <width>430</width>
+    <height>759</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,6 +19,12 @@
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
        <widget class="QPushButton" name="btnCheckDevice">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="text">
          <string>检查设备</string>
         </property>
@@ -26,6 +32,12 @@
       </item>
       <item>
        <widget class="QLabel" name="lblDeviceID">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="text">
          <string>None</string>
         </property>
@@ -34,7 +46,7 @@
      </layout>
     </item>
     <item>
-     <widget class="QTabWidget" name="tabWidget_2">
+     <widget class="QTabWidget" name="tabMain">
       <property name="currentIndex">
        <number>0</number>
       </property>
@@ -44,14 +56,31 @@
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
-         <widget class="QPushButton" name="btnNetLoadConf">
-          <property name="text">
-           <string>从设备加载配置</string>
-          </property>
-         </widget>
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <item>
+           <widget class="QPushButton" name="btnNetLoadConf">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>从设备加载配置</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="txtConfPath">
+            <property name="text">
+             <string>/usr/bin/conf/parser.json</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
         <item>
-         <widget class="QTabWidget" name="tabWidget">
+         <widget class="QTabWidget" name="tabNetConf">
           <property name="currentIndex">
            <number>0</number>
           </property>
@@ -61,7 +90,7 @@
            </attribute>
            <layout class="QVBoxLayout" name="verticalLayout_3">
             <item>
-             <widget class="QRadioButton" name="rbtnIsDHCPWired">
+             <widget class="QRadioButton" name="rbtnIsWiredDHCP">
               <property name="text">
                <string>动态IP(DHCP)</string>
               </property>
@@ -73,6 +102,13 @@
               </property>
               <property name="checked">
                <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="Line" name="line_3">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
               </property>
              </widget>
             </item>
@@ -92,7 +128,11 @@
                </widget>
               </item>
               <item row="0" column="1">
-               <widget class="QLineEdit" name="txtWiredIPWired"/>
+               <widget class="QLineEdit" name="txtWiredIP">
+                <property name="enabled">
+                 <bool>true</bool>
+                </property>
+               </widget>
               </item>
               <item row="1" column="0">
                <widget class="QLabel" name="label_3">
@@ -102,7 +142,7 @@
                </widget>
               </item>
               <item row="1" column="1">
-               <widget class="QLineEdit" name="txtWiredMaskWired"/>
+               <widget class="QLineEdit" name="txtWiredMask"/>
               </item>
               <item row="2" column="0">
                <widget class="QLabel" name="label_4">
@@ -112,7 +152,7 @@
                </widget>
               </item>
               <item row="2" column="1">
-               <widget class="QLineEdit" name="txtWiredGatewayWired"/>
+               <widget class="QLineEdit" name="txtWiredGateway"/>
               </item>
               <item row="3" column="0">
                <widget class="QLabel" name="label_5">
@@ -122,22 +162,9 @@
                </widget>
               </item>
               <item row="3" column="1">
-               <widget class="QLineEdit" name="txtWiredDNSWired"/>
+               <widget class="QLineEdit" name="txtWiredDNS"/>
               </item>
              </layout>
-            </item>
-            <item>
-             <spacer name="verticalSpacer_3">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>20</width>
-                <height>40</height>
-               </size>
-              </property>
-             </spacer>
             </item>
            </layout>
           </widget>
@@ -152,12 +179,12 @@
                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
               </property>
               <property name="formAlignment">
-               <set>Qt::AlignHCenter|Qt::AlignTop</set>
+               <set>Qt::AlignCenter</set>
               </property>
               <item row="0" column="0">
                <widget class="QLabel" name="label_10">
                 <property name="text">
-                 <string>Wi-Fi名(SSID)</string>
+                 <string>SSID</string>
                 </property>
                </widget>
               </item>
@@ -169,10 +196,10 @@
                </widget>
               </item>
               <item row="0" column="1">
-               <widget class="QLineEdit" name="txtSSID"/>
+               <widget class="QLineEdit" name="txtWifiSSID"/>
               </item>
               <item row="1" column="1">
-               <widget class="QLineEdit" name="txtPasswordWifi"/>
+               <widget class="QLineEdit" name="txtWifiPassword"/>
               </item>
              </layout>
             </item>
@@ -184,7 +211,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QRadioButton" name="rbtnIsDHCPWIFI">
+             <widget class="QRadioButton" name="rbtnIsWifiDHCP">
               <property name="text">
                <string>动态IP(DHCP)</string>
               </property>
@@ -200,12 +227,19 @@
              </widget>
             </item>
             <item>
+             <widget class="Line" name="line_4">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
              <layout class="QFormLayout" name="formLayout_3">
               <property name="labelAlignment">
                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
               </property>
               <property name="formAlignment">
-               <set>Qt::AlignHCenter|Qt::AlignTop</set>
+               <set>Qt::AlignCenter</set>
               </property>
               <item row="0" column="0">
                <widget class="QLabel" name="label_6">
@@ -236,31 +270,18 @@
                </widget>
               </item>
               <item row="0" column="1">
-               <widget class="QLineEdit" name="txtWiredIPWifi"/>
+               <widget class="QLineEdit" name="txtWifiIP"/>
               </item>
               <item row="1" column="1">
-               <widget class="QLineEdit" name="txtWiredMaskWifi"/>
+               <widget class="QLineEdit" name="txtWifiMask"/>
               </item>
               <item row="2" column="1">
-               <widget class="QLineEdit" name="txtWiredGatewayWifi"/>
+               <widget class="QLineEdit" name="txtWifiGateway"/>
               </item>
               <item row="3" column="1">
-               <widget class="QLineEdit" name="txtWiredDNSWifi"/>
+               <widget class="QLineEdit" name="txtWifiDNS"/>
               </item>
              </layout>
-            </item>
-            <item>
-             <spacer name="verticalSpacer_2">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>20</width>
-                <height>40</height>
-               </size>
-              </property>
-             </spacer>
             </item>
            </layout>
           </widget>
@@ -273,6 +294,13 @@
              <widget class="QLabel" name="label_12">
               <property name="text">
                <string>网络类型</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="Line" name="line_2">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
               </property>
              </widget>
             </item>
@@ -294,6 +322,9 @@
              <widget class="QRadioButton" name="rbtnUNICOM">
               <property name="text">
                <string>联通</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
               </property>
              </widget>
             </item>
@@ -321,28 +352,37 @@
           </property>
          </widget>
         </item>
+        <item>
+         <widget class="QPlainTextEdit" name="txtLog">
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnReboot">
+          <property name="text">
+           <string>重启设备</string>
+          </property>
+         </widget>
+        </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tabTBD">
+      <widget class="QWidget" name="tabOther">
        <attribute name="title">
-        <string>TBD</string>
+        <string>其他</string>
        </attribute>
       </widget>
      </widget>
     </item>
    </layout>
   </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>387</width>
-     <height>22</height>
-    </rect>
-   </property>
-  </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionTool">
+   <property name="text">
+    <string>Tool</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>
