@@ -3,12 +3,24 @@
 import json
 import time
 import subprocess
+import platform
 
 dirNetType = ["wired", "wifi", "mobile"]
 dirMobileType = {"telecom":"telecom", "mobile":"mobile", "unicom":"unicom"}
 
 def processCMD(cmdStr):
-    p = subprocess.Popen(cmdStr, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    sysstr = platform.system()
+    print(sysstr)
+    if sysstr =="Windows":
+        prefix = "adb\adb.exe "
+    elif sysstr == "Linux":
+        prefix = "./adb/adb_linux "
+    elif sysstr == "Darwin":
+        prefix = "./adb/adb_macos "
+    else:
+        print ("UnSupported System")
+        return
+    p = subprocess.Popen(prefix + cmdStr, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     cmdOut = p.stdout.readlines()
     _ = p.wait()
     return cmdOut

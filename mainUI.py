@@ -41,7 +41,7 @@ class ExampleApp(QtWidgets.QMainWindow, TumConf.Ui_TUMCONF):
     def netLoadConf(self):
         filePath = self.txtConfPath.text()
         if filePath != "":
-            cmdStr = "adb pull " + filePath
+            cmdStr = "pull " + filePath
             cmdOut = processCMD(cmdStr)
             for line in cmdOut:
                 self.printLog(line.decode("utf-8"))
@@ -97,7 +97,7 @@ class ExampleApp(QtWidgets.QMainWindow, TumConf.Ui_TUMCONF):
                 self.rbtnCMCC.setChecked(False)
                 self.rbtnUNICOM.setChecked(False)
     def rebootDevice(self):
-        cmdStr = "adb reboot"
+        cmdStr = "reboot"
         _ = processCMD(cmdStr)
         self.printLog("====== reboot device =======")
 
@@ -119,7 +119,7 @@ class ExampleApp(QtWidgets.QMainWindow, TumConf.Ui_TUMCONF):
         else:
             self.switchMobileType()
         self.netConf.downloadNetConf()
-        cmdStr = "adb push " + self.netConf.fileName + " " + self.txtConfPath.text()
+        cmdStr = "push " + self.netConf.fileName + " " + self.txtConfPath.text()
         cmdOut = processCMD(cmdStr)
         for line in cmdOut:
             self.printLog(line.decode("utf-8"))
@@ -162,9 +162,9 @@ class ExampleApp(QtWidgets.QMainWindow, TumConf.Ui_TUMCONF):
             self.netConf.mobileType = dirMobileType["unicom"]
 
     def checkDevice(self):
-        cmdOut = processCMD("adb devices")
-        if len(cmdOut) > 0:
-            deviceStrings = cmdOut[1:] #TODO: check zero len if cmd fail
+        cmdOut = processCMD("devices")
+        if len(cmdOut) > 1:
+            deviceStrings = cmdOut[1:]
             firstDevice = deviceStrings[0].decode("utf-8")
             deviceSN = firstDevice.split("device")[0]
             if len(deviceSN) > 1:
