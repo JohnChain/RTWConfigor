@@ -16,7 +16,10 @@
 > python mainUI.py
 
 ## 使用方式
-
+1. 使用USB线将设备与电脑相连
+2. 设备管理器里出现“ADB”的设备
+3. 参照图片依次点击执行配置
+![](doc/tumNetConf.png)
 
 ## 使用环境搭建
 ### 安装python3
@@ -35,14 +38,20 @@ https://www.cnblogs.com/syh6324/p/9484208.html
 
 Windows下同时加入 python/scripts/ (for pip)
 
-
 ## 开发环境搭建
 ### PyQT基本串口程序(for MacOS)
 https://nikolak.com/pyqt-qt-designer-getting-started/
 ### 打包至多个平台(eg: Windows)
 http://www.pyinstaller.org/
 
-https://www.cnblogs.com/dcb3688/p/4237121.html
+安装pyinstaller
+> pip install pyinstaller
+
+打包成exe文件
+> pyinstaller -F yourprogram.py
+
+去除终端黑框方式，但此命令暂时有问题待解(点击内部按钮闪退)
+> pyinstaller -F -w yourprogram.py
 
 ## 开发遇到整理
 ### vscode unable to import 'pyqt5'
