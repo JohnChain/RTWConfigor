@@ -167,7 +167,7 @@ class ExampleApp(QtWidgets.QMainWindow, TumConf.Ui_TUMCONF):
     def checkDevice(self):
         processCMD("start-server")
         cmdOut = processCMD("devices")
-        if len(cmdOut) > 1:
+        if len(cmdOut) > 2:
             deviceStrings = cmdOut[1:]
             firstDevice = deviceStrings[0].decode("utf-8")
             deviceSN = firstDevice.split("device")[0]
