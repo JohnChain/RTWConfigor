@@ -19,7 +19,7 @@ def processCMD(cmdStr):
         prefix = "./adb/adb_macos "
     else:
         print ("UnSupported System")
-        return
+        return "UnSupported System"
     p = subprocess.Popen(prefix + cmdStr, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     cmdOut = p.stdout.readlines()
     _ = p.wait()
@@ -29,12 +29,12 @@ def updateNetwork(mainJson, netJson):
     mainJson["network"] = netJson
 
 def loadJsonFile(fileName):
-    with open(fileName, 'r') as f:
+    with open(fileName, 'r', encoding='UTF-8') as f:
         data = json.load(f)
     return data
 
 def writeJsonFile(fileName, data):
-    with open(fileName, 'w') as f:
+    with open(fileName, 'w', encoding='UTF-8') as f:
         json.dump(data, f)
 
 class NetworkConf:
