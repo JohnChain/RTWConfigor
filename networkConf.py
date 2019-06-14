@@ -12,7 +12,7 @@ def processCMD(cmdStr):
     sysstr = platform.system()
     print(sysstr)
     if sysstr =="Windows":
-        prefix = "adb\adb.exe "
+        prefix = "adb\\adb.exe "
     elif sysstr == "Linux":
         prefix = "./adb/adb_linux "
     elif sysstr == "Darwin":
