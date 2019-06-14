@@ -165,6 +165,7 @@ class ExampleApp(QtWidgets.QMainWindow, TumConf.Ui_TUMCONF):
             self.netConf.mobileType = dirMobileType["unicom"]
 
     def checkDevice(self):
+        processCMD("start-server")
         cmdOut = processCMD("devices")
         if len(cmdOut) > 1:
             deviceStrings = cmdOut[1:]
