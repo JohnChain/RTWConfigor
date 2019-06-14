@@ -5,10 +5,13 @@ import sys
 import TumConf
 from networkConf import *
 
+version = "version: 20190614001"
+
 class ExampleApp(QtWidgets.QMainWindow, TumConf.Ui_TUMCONF):
     def __init__(self, parent=None):
         super(ExampleApp, self).__init__(parent)
         self.setupUi(self)
+        self.statusBar().showMessage(version)
         self.registEvent()
         self.initStates()
         self.netConf = NetworkConf()
