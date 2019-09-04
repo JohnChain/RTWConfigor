@@ -60,3 +60,6 @@ https://stackoverflow.com/a/51010506/2422318
 
 ### AttributeError: module 'PyQt5.QtGui' has no attribute 'QMainWindow'
 https://blog.csdn.net/weixin_42137589/article/details/81489363
+
+### No name 'QWidget' in module 'PyQt5.QtWidgets'
+https://www.jianshu.com/p/73d41faaf469
