@@ -51,7 +51,7 @@ http://www.pyinstaller.org/
 打包成exe文件
 > pyinstaller -F yourprogram.py
 
-去除终端黑框方式，但此命令暂时有问题待解(点击内部按钮闪退)
+去除终端黑框方式，但此命令暂时有问题待解(~~点击内部按钮闪退~~ 参照[这里](https://stackoverflow.com/a/40108817/2422318))
 > pyinstaller -F -w yourprogram.py
 
 ## 开发遇到整理
