@@ -20,7 +20,7 @@ def processCMD(cmdStr):
     else:
         print ("UnSupported System")
         return "UnSupported System"
-    p = subprocess.Popen(prefix + cmdStr, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    p = subprocess.Popen(prefix + cmdStr, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, stdin=subprocess.DEVNULL)
     cmdOut = p.stdout.readlines()
     _ = p.wait()
     return cmdOut
